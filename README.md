@@ -11,9 +11,12 @@ Spyglass is a simple library which provides a mechanism by which you can display
 
 ## Usage
 
+```php
+<?php
 $spyglass = new \Converge\Spyglass\Spyglass;
 $spyglass->addLense(new \namespace\for\my\lense);
 echo $spyglass->render();
+```
 
 ### Using a custom template
 
