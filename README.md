@@ -22,13 +22,13 @@ echo $spyglass->render();
 
 A custom template will provide a custom wrapper around the lenses for viewing.
 
-Pass the fully qualified path to a PHP or PHTML file to \Converge\Spyglass\Spyglass::render()
+Pass the fully qualified path to a PHP or PHTML file to ```\Converge\Spyglass\Spyglass::render()```
 
 _Note_: Render passes an array ```$lenses``` to the template.
 
 ## Extending
 
-Create a lense extending \Converge\Spyglass\Lense
+Create a lense extending ```\Converge\Spyglass\Lense```
 
 ## To-Do
 
