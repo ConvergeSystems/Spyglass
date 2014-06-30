@@ -1,0 +1,30 @@
+<?php
+/**
+ * This file creates a single description definiton list from an associative array
+ * 
+ * @param array $data -- the keys will be the term the value will be the definition.
+ *      if the value is an array, a sub-definition list is created
+ */    
+?>
+<dl class="spyglass_definition">
+    <?php
+    foreach($data as $key => $val):
+    ?>
+        <dt><?=$key;?></dt>
+        <dd>
+            <?php
+            if(is_array($val)):
+                echo \Converge\Spyglass\Lense::dataList($val);
+            else:
+            ?>
+            <div>
+                <?=$val; ?>
+            </div>
+            <?php
+            endif;
+            ?>
+        </dd>
+    <?php
+    endforeach;
+    ?>
+</dl>

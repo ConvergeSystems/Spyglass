@@ -1,0 +1,175 @@
+<?php
+/**
+ * creates the spyglass container
+ * 
+ * @param array<Converge\Spyglass\Lense> $lenses -- the lenses to be rendered
+ */
+?>
+<div id="spyglass_section_container" class="spyglass_hidden">        
+    <h1>spyglass</h1>
+    <section class="spyglass_main">
+        <?php
+        foreach($lenses as $lense):
+        ?>
+        <article class="spyglass_lense">
+            <span class="spyglass_lense_heading">
+                <h3><?php echo $lense->getName();?></h3>
+                <a href="#" class="spyglass_lense_visibility">hide</a>
+            </span>
+            <div class="spyglass_lense_content"><?php echo $lense->getHtml();?></div>
+        </article>
+        <?php
+        endforeach;
+        ?>
+    </section>
+</div>
+<a href="#" id="spyglass_status">spyglass</a>
+<style>
+    #spyglass_status{
+        position: fixed;
+        z-index: 9999999999999999999999999999;
+        top: 5px;
+        right: 5px;
+        color: #fff;
+        text-shadow: 1px 1px 1px #000;
+        text-decoration: none;
+        display: block;
+        
+    }
+    .spyglass_hidden{
+        display: none;
+    }
+    .spyglass_blur{
+      -webkit-filter: grayscale(0.5) blur(10px);
+    }
+    #spyglass_section_container{
+        background: rgba(0, 0, 0, .7);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 88888888888888888888888888888;
+    }
+        #spyglass_section_container h1{
+            font-size: 50px;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 1px #000;
+            margin: 0px;
+            padding: 0px;
+            height: 50px;
+            line-height: 50px;
+        }
+        .spyglass_main{
+            position: absolute;
+            left: 15%;
+            right: 15%;
+            overflow: auto;
+            top: 50px;
+            bottom: 0;
+            color: #fff;
+        }
+            .spyglass_lense{
+                width: 45%;
+                margin: 0 2.5%;
+                float: left;
+            }
+                .spyglass_lense_heading{
+                    display: block;
+                    position: relative;
+                }
+                    .spyglass_lense_visibility{
+                        position: absolute;
+                        top: 5px;
+                        right: 0;
+                    }
+                .spyglass_lense_content{
+                    background-color: #fff;
+                    color: #555;
+                    height: 300px;
+                    overflow: auto;
+                    border-radius: 3px;
+                }
+                dl.spyglass_definition dd div{
+                    margin: 5px;
+                }
+                    dl.spyglass_definition dd dl{
+                        margin-left: 30px;
+                    }
+                dl.spyglass_definition{
+                    
+                }
+                dl.spyglass_definition dt{
+                    position: static;
+                    background-color: #D4F0F6;
+                    margin: 0;
+                    padding: 0 0 0 5px;
+                    width: auto;
+                }
+                dl.spyglass_definition dd{
+                    margin: 0;
+                    padding: 0;
+                    border: none;
+                }
+</style>
+<script type="text/javascript">
+;(function(){
+    function hasClass(ele,cls) {
+        return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+    }
+
+    function addClass(ele,cls) {
+        if (!hasClass(ele,cls)) ele.className += " "+cls;
+    }
+
+    function removeClass(ele,cls) {
+        if (hasClass(ele,cls)) {
+            var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+            ele.className=ele.className.replace(reg,' ');
+        }
+    }
+
+    window.onload = function(){
+        var link = document.getElementById('spyglass_status'),
+            section = document.getElementById('spyglass_section_container'),
+            toggles = document.querySelectorAll('.spyglass_lense_visibility'),
+            contents = document.querySelectorAll('.spyglass_lense_content'),
+            body = document.getElementsByTagName('body')[0];
+
+        link.addEventListener('click', function(e){
+            e.preventDefault();
+        
+            if(hasClass(section, 'spyglass_hidden')){
+                removeClass(section, 'spyglass_hidden');
+                body.style.overflow = 'hidden';
+            }else{
+                addClass(section, 'spyglass_hidden');
+                body.style.overflow = 'auto';
+            }
+        
+            return false;
+        });
+    
+        for(var i = 0, len = toggles.length; i < len; i++){
+            var toggle = toggles[i],
+                content = contents[i];
+        
+            (function(toggle, x, content){
+                toggle.addEventListener('click', function(e){
+                    e.preventDefault();
+                
+                    if(hasClass(content, 'spyglass_hidden')){
+                        removeClass(content, 'spyglass_hidden');
+                        toggle.innerHTML = 'hide';
+                    }else{
+                        addClass(content, 'spyglass_hidden');
+                        toggle.innerHTML = 'show';
+                    }
+                });
+            }(toggle, i, content));
+        }
+    }
+}());
+</script>
